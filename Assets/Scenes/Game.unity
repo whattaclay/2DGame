@@ -123,6 +123,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &52969527
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 52969528}
+  m_Layer: 6
+  m_Name: ShootPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &52969528
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 52969527}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.264, y: -0.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 924815643}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &59265989
 GameObject:
   m_ObjectHideFlags: 0
@@ -135,7 +166,7 @@ GameObject:
   - component: {fileID: 59265992}
   - component: {fileID: 59265991}
   - component: {fileID: 59265990}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -223,7 +254,7 @@ RectTransform:
   - {fileID: 1579129363}
   - {fileID: 1336913987}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -241,7 +272,7 @@ GameObject:
   - component: {fileID: 211471635}
   - component: {fileID: 211471637}
   - component: {fileID: 211471636}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: BackroundImage (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1370,7 +1401,7 @@ GameObject:
   - component: {fileID: 485004220}
   - component: {fileID: 485004222}
   - component: {fileID: 485004221}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: BackroundImage (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1547,7 +1578,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.38298908, y: -1.2400001, z: -10}
+  m_LocalPosition: {x: -0.38298884, y: -1.139, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1697,7 +1728,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &774515526
 GameObject:
@@ -1710,7 +1741,7 @@ GameObject:
   - component: {fileID: 774515527}
   - component: {fileID: 774515529}
   - component: {fileID: 774515528}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: BackroundImage (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1786,7 +1817,7 @@ GameObject:
   - component: {fileID: 779554245}
   - component: {fileID: 779554247}
   - component: {fileID: 779554246}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: BackroundImage (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1909,8 +1940,10 @@ GameObject:
   - component: {fileID: 924815641}
   - component: {fileID: 924815640}
   - component: {fileID: 924815646}
-  - component: {fileID: 924815644}
   - component: {fileID: 924815645}
+  - component: {fileID: 924815644}
+  - component: {fileID: 924815647}
+  - component: {fileID: 924815648}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -2039,14 +2072,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 924815638}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.3829886, y: -3.24, z: 0}
+  m_LocalPosition: {x: -0.3829886, y: -3.139, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1279647554}
   - {fileID: 2101137574}
+  - {fileID: 52969528}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &924815644
 MonoBehaviour:
@@ -2062,7 +2096,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 924815641}
   runSpeed: 40
-  animator: {fileID: 924815645}
+  animParam: {fileID: 924815648}
+  hidenWeapon: {fileID: 924815647}
 --- !u!95 &924815645
 Animator:
   serializedVersion: 5
@@ -2097,9 +2132,37 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.35, y: 0.68}
+  m_Offset: {x: 0, y: 0.0062633157}
+  m_Size: {x: 0.35, y: 0.66747344}
   m_Direction: 0
+--- !u!114 &924815647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 924815638}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89f905b1224812c48a004fe7c1eefeef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootPoint: {fileID: 52969528}
+  bulletPrefab: {fileID: 7716149768186632288, guid: ff604f40053b69746a869d324bd51a55, type: 3}
+  shootDelay: 2
+--- !u!114 &924815648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 924815638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d2266c518e84cd5b2dfa583efb66893, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 924815645}
 --- !u!1 &1279647553
 GameObject:
   m_ObjectHideFlags: 0
@@ -2142,7 +2205,7 @@ GameObject:
   - component: {fileID: 1336913987}
   - component: {fileID: 1336913989}
   - component: {fileID: 1336913988}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: BackroundImage (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2218,7 +2281,7 @@ GameObject:
   - component: {fileID: 1572857267}
   - component: {fileID: 1572857269}
   - component: {fileID: 1572857268}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: BackroundImage (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2294,7 +2357,7 @@ GameObject:
   - component: {fileID: 1579129363}
   - component: {fileID: 1579129365}
   - component: {fileID: 1579129364}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: BackroundImage (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2422,7 +2485,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1704233656}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.38298908, y: -1.2400001, z: -10}
+  m_LocalPosition: {x: -0.38298884, y: -1.139, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
