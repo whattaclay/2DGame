@@ -1,5 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using Character.Attacks;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Character
 {
@@ -7,36 +10,51 @@ namespace Character
     public class AnimateMovements : MonoBehaviour
     {
         [SerializeField] private Animator animator;
-        [SerializeField] private float shootAnimationTime = 0.5f;
-        private CharacterController2D _characterController2D;
+        private bool _hitSwitcher;
         private static readonly int IsFalling = Animator.StringToHash("IsFalling");
         private static readonly int IsJumping = Animator.StringToHash("IsJumping");
         private static readonly int IsMoving = Animator.StringToHash("IsMoving");
         private static readonly int IsCrouch = Animator.StringToHash("IsCrouch");
-        private static readonly int IsShooting = Animator.StringToHash("IsShooting");
-        private void Awake()
-        {
-            _characterController2D = GetComponent<CharacterController2D>();
-        }
+        private static readonly int IsShoot = Animator.StringToHash("IsShoot");
+        private static readonly int IsHit = Animator.StringToHash("IsHit");
+        private static readonly int HitSwitcher = Animator.StringToHash("HitSwitcher");
+        private static readonly int IsPowerFullHit = Animator.StringToHash("IsPowerFullHit");
+
         private void Update()
         {
-            if (_characterController2D.fireState == FireState.Fire1)
+            switch (CharacterController2D.FireState)
             {
-                StartCoroutine(ShootAnimationTime());
+                case FireState.DistanceAttack:
+                    animator.SetTrigger(IsShoot);
+                    CharacterController2D.FireState = FireState.None;
+                    break;
+                case FireState.MagicHit:
+                    animator.SetTrigger(IsHit);
+                    CharacterController2D.FireState = FireState.None;
+                    _hitSwitcher = RandomBool();
+                    break;
+                case FireState.PowerFullMagicHit:
+                    animator.SetTrigger(IsPowerFullHit);
+                    CharacterController2D.FireState = FireState.None;
+                    break;
+                default:
+                    CharacterController2D.FireState = FireState.None;
+                    break;
             }
-            animator.SetBool(IsShooting, _characterController2D.fireState == FireState.Fire1);
-            animator.SetBool(IsFalling, _characterController2D.moveState == MoveState.Fall);
-            animator.SetBool(IsJumping, _characterController2D.moveState == MoveState.Jump);
-            animator.SetBool(IsMoving,_characterController2D.moveState == MoveState.Move);
+            animator.SetBool(HitSwitcher, _hitSwitcher);
+            animator.SetBool(IsFalling, CharacterController2D.MoveState == MoveState.Fall);
+            animator.SetBool(IsJumping, CharacterController2D.MoveState == MoveState.Jump);
+            animator.SetBool(IsMoving,CharacterController2D.MoveState == MoveState.Move);
         }
         public void IsCrouching(bool isCrouching)
         {
             animator.SetBool(IsCrouch, isCrouching);
         }
-        private IEnumerator ShootAnimationTime()
+        private static bool RandomBool()
         {
-            yield return new WaitForSeconds(shootAnimationTime);
-            _characterController2D.fireState = FireState.None;
+            var rand = Random.Range(0f, 10f);
+            var randBool = (rand > 5);
+            return randBool;
         }
     }
 }

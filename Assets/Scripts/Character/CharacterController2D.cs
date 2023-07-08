@@ -1,5 +1,7 @@
 using System;
-using Character.CharactersMagicBall;
+using Character.Attacks;
+using Character.Attacks.DistanceAttack;
+using Character.Attacks.MagicHit;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -18,6 +20,8 @@ namespace Character
 		[SerializeField] private Collider2D crouchDisableCollider;
 		[Header("Выстрел магией")]
 		[SerializeField] private DistanceAttack distanceAttack;
+		[Header("Удар магией")]
+		[SerializeField] private MagicHit magicHit;
 
 		private const float GroundedCircleRadius = 0.1f;
 		private bool _isGrounded;
@@ -26,8 +30,8 @@ namespace Character
 		private bool _facingRight = true;
 		private Vector3 _velocity = Vector3.zero;
 		private bool _isCrouching;
-		public MoveState moveState;
-		public FireState fireState;
+		public static MoveState MoveState;
+		public static FireState FireState;
 		[Header("Events")]
 		[Space]
 		public UnityEvent onLandEvent;
@@ -49,6 +53,23 @@ namespace Character
 			if (!isGrounded)
 				onLandEvent.Invoke();
 		}
+
+		private void Update()
+		{
+			if (_isCrouching || !_isGrounded) return;
+			if (Input.GetButton("Fire1"))
+			{
+				distanceAttack.Shoot();
+			}
+			if (Input.GetButtonDown("Fire2"))
+			{
+				magicHit.Hit();
+			}
+			if (Input.GetButtonDown("Fire3"))
+			{
+				magicHit.PowerFullHit();
+			}
+		}
 		public void Move(float move, bool crouch, bool jump)
 		{
 			if (!crouch) 
@@ -60,7 +81,7 @@ namespace Character
 			}
 			if (_rigidbody2D.velocity.y < -0.8f)
 			{
-				moveState = MoveState.Fall;
+				MoveState = MoveState.Fall;
 			}
 			if (crouch)
 			{
@@ -73,10 +94,6 @@ namespace Character
 				crouchDisableCollider.enabled = false;
 			} else
 			{
-				if (Input.GetButton("Fire1"))
-				{
-					distanceAttack.Shoot();
-				}
 				crouchDisableCollider.enabled = true;
 				if (_isCrouching)
 				{
@@ -96,16 +113,16 @@ namespace Character
 			}
 			if (Math.Abs(move) > 0 && !jump && _rigidbody2D.velocity.y >= 0)
 			{
-				moveState = MoveState.Move;
+				MoveState = MoveState.Move;
 			}
 			else if(Math.Abs(move) == 0f && !jump && _rigidbody2D.velocity.y >= 0)
 			{
-				moveState = MoveState.Idle;
+				MoveState = MoveState.Idle;
 			}
 			if (!_isGrounded || !jump || crouch) return; 
 			_isGrounded = false;
 			_rigidbody2D.AddForce(new Vector2(0f, jumpForce));
-			moveState = MoveState.Jump;
+			MoveState = MoveState.Jump;
 		}
 		private void Flip()
 		{

@@ -6,10 +6,10 @@ namespace Character
     {
         [SerializeField] private CharacterController2D controller;
         [SerializeField] private float runSpeed = 40f;
-        private float _horizontalMove = 0f;
-        private bool _isCrouch = false;
-        private bool _isStillCrouching = false;
-        private bool _isJump = false;
+        private float _horizontalMove;
+        private bool _isCrouch;
+        private bool _isStillCrouching;
+        private bool _isJump;
         void Update()
         {
             _horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed; 
@@ -28,6 +28,7 @@ namespace Character
         {
             _isJump = false;
         }
+        
         private void FixedUpdate()
         {
             controller.Move((_horizontalMove * Time.fixedDeltaTime), _isCrouch, _isJump); 
