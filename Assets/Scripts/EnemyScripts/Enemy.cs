@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace EnemyScripts
 {
@@ -6,17 +7,23 @@ namespace EnemyScripts
     {
         [SerializeField] private float health = 100f;
         private Collider2D _collider;
-        public static EnemyState EnemyState;
+        public  EnemyState enemyState;
+        private Rigidbody2D _rb;
 
         private void Awake()
         {
             _collider = GetComponent<Collider2D>();
+            _rb = GetComponent<Rigidbody2D>();
         }
 
+        public void GiveDamage()
+        {
+            Debug.Log("GiveDamage");
+        }
         public void TakeDamage(float damage)
         { 
             health -= damage;
-            EnemyState = EnemyState.Hurt;
+            enemyState = EnemyState.Hurt;
             if (health <= 0)
             {
                 Die();
@@ -24,9 +31,15 @@ namespace EnemyScripts
         }
         private void Die()
         {
-            EnemyState = EnemyState.Dead;
+            _rb.velocity = Vector2.zero;
+            enemyState = EnemyState.Dead;
             _collider.enabled = false;
             enabled = false;
+            _rb.bodyType = RigidbodyType2D.Kinematic;
+        }
+        public void DestroyBody()
+        {
+            Destroy(gameObject);  
         }
     }
 }
