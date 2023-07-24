@@ -1,6 +1,7 @@
 using System.Collections;
 using EnemyScripts;
 using UnityEngine;
+using Enemy = EnemyScripts.Base.Enemy;
 
 namespace Character.Attacks.MagicHit
 {
@@ -37,7 +38,7 @@ namespace Character.Attacks.MagicHit
             var hitEnemies = Physics2D.OverlapCircleAll(hitPoint.position, hitRange, enemyLayers);
             foreach (var enemy in hitEnemies)
             {
-                enemy.GetComponent<Enemy>().TakeDamage(damage);
+                enemy.GetComponent<Enemy>().CurrentHealth -= damage;
             }
             /*Collider2D[] colliders = new Collider2D[10];
             var value = Physics2D.OverlapCircleNonAlloc(hitPoint.position, hitRange, colliders, enemyLayers);

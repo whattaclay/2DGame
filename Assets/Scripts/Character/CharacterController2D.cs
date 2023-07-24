@@ -23,12 +23,13 @@ namespace Character
 		[Header("Удар магией")]
 		[SerializeField] private MagicHit magicHit;
 
-		private const float GroundedCircleRadius = 0.1f;
-		private bool _isGrounded;
-		private const float CeilingCircleRadius = 0.1f;
 		private Rigidbody2D _rigidbody2D;
-		private bool _facingRight = true;
+		private float _flipValue = 1f; // 1 - игрок повернут вправо, -1 - влево
 		private Vector3 _velocity = Vector3.zero;
+		private const float GroundedCircleRadius = 0.1f;
+		private const float CeilingCircleRadius = 0.1f;
+		private const float FallingConst = -1.5f;
+		private bool _isGrounded;
 		private bool _isCrouching;
 		public static MoveState MoveState;
 		public static FireState FireState;
@@ -57,7 +58,7 @@ namespace Character
 		private void Update()
 		{
 			if (_isCrouching || !_isGrounded) return;
-			if (Input.GetButton("Fire1"))
+			if (Input.GetButton("Fire1") && MoveState != MoveState.Move)
 			{
 				distanceAttack.Shoot();
 			}
@@ -65,7 +66,7 @@ namespace Character
 			{
 				magicHit.Hit();
 			}
-			if (Input.GetButtonDown("Fire3"))
+			if (Input.GetButtonDown("Fire3")&& MoveState != MoveState.Move)
 			{
 				magicHit.PowerFullHit();
 			}
@@ -79,7 +80,7 @@ namespace Character
 					crouch = true;
 				}
 			}
-			if (_rigidbody2D.velocity.y < -0.8f)
+			if (_rigidbody2D.velocity.y < FallingConst)
 			{
 				MoveState = MoveState.Fall;
 			}
@@ -106,9 +107,9 @@ namespace Character
 			_rigidbody2D.velocity = Vector3.SmoothDamp(velocity, targetVelocity, ref _velocity, movementSmoothing);
 			switch (move)
 			{
-				case > 0 when !_facingRight:  // если игрок повернут налево во время движения вправо, переворачиваем его
-				case < 0 when _facingRight:  // если игрок повернут направо во время движения влево, переворачиваем его
-					Flip();
+				case > 0 when _flipValue < 0 :  // если игрок повернут налево во время движения вправо, переворачиваем его
+				case < 0 when _flipValue > 0:  // если игрок повернут направо во время движения влево, переворачиваем его
+					_flipValue = ChangeDirectionView.Flip(transform, _flipValue);
 					break;
 			}
 			if (Math.Abs(move) > 0 && !jump && _rigidbody2D.velocity.y >= 0)
@@ -123,11 +124,6 @@ namespace Character
 			_isGrounded = false;
 			_rigidbody2D.AddForce(new Vector2(0f, jumpForce));
 			MoveState = MoveState.Jump;
-		}
-		private void Flip()
-		{
-			_facingRight = !_facingRight;
-			transform.Rotate(0f,180f,0f);
 		}
 	}
 }

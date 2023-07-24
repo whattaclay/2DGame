@@ -1,4 +1,5 @@
 using EnemyScripts;
+using EnemyScripts.Base;
 using UnityEngine;
 
 namespace Character.Attacks.DistanceAttack
@@ -17,10 +18,11 @@ namespace Character.Attacks.DistanceAttack
 
         private void OnTriggerEnter2D(Collider2D hitInfo) //проверяем куда попал снаряд, если во врага, то снимаем хп
         {
+            if (!hitInfo.CompareTag("Enemy")) return;
             Enemy enemy = hitInfo.GetComponent<Enemy>();
             if (enemy!= null)
             {
-                enemy.TakeDamage(damage);
+                enemy.CurrentHealth -= damage;
             }
             Instantiate(impactEffect, transform.position, transform.rotation); //создаем эффект попадания снаряда
             Destroy(gameObject); //дестроим снаряд после попадания
