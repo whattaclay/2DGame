@@ -37,12 +37,16 @@ namespace Character
 		[Space]
 		public UnityEvent onLandEvent;
 		public UnityEvent<bool> onCrouchEvent;
+		public UnityEvent onCharactersDeath;
+
+		private Health _health;
 
 		private void Awake() 
 		{
 			_rigidbody2D = GetComponent<Rigidbody2D>();
 			onLandEvent ??= new UnityEvent(); 
 			onCrouchEvent ??= new UnityEvent<bool>();
+			_health = GetComponent<Health>();
 		}
 		private void FixedUpdate()
 		{
@@ -57,7 +61,7 @@ namespace Character
 
 		private void Update()
 		{
-			if (_isCrouching || !_isGrounded) return;
+			if (_isCrouching || !_isGrounded|| MoveState == MoveState.Dead) return;
 			if (Input.GetButton("Fire1") && MoveState != MoveState.Move)
 			{
 				distanceAttack.Shoot();
@@ -70,19 +74,24 @@ namespace Character
 			{
 				magicHit.PowerFullHit();
 			}
+			if (_health.CurrentHealth <= 0)
+			{
+				Die();
+			}
 		}
 		public void Move(float move, bool crouch, bool jump)
 		{
+			if (MoveState == MoveState.Dead) return;
+			if (_rigidbody2D.velocity.y < FallingConst)
+			{
+				MoveState = MoveState.Fall;
+			}
 			if (!crouch) 
 			{
 				if (Physics2D.OverlapCircle(ceilingCheck.position, CeilingCircleRadius, whatIsGround))
 				{
 					crouch = true;
 				}
-			}
-			if (_rigidbody2D.velocity.y < FallingConst)
-			{
-				MoveState = MoveState.Fall;
 			}
 			if (crouch)
 			{
@@ -124,6 +133,12 @@ namespace Character
 			_isGrounded = false;
 			_rigidbody2D.AddForce(new Vector2(0f, jumpForce));
 			MoveState = MoveState.Jump;
+		}
+		private void Die()
+		{
+			MoveState = MoveState.Dead;
+			_rigidbody2D.constraints = RigidbodyConstraints2D.FreezePositionX;
+			onCharactersDeath.Invoke();
 		}
 	}
 }

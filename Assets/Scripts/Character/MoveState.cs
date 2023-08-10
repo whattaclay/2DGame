@@ -5,6 +5,7 @@
         Move,
         Jump,
         Fall,
-        Idle
+        Idle,
+        Dead
     }
 }

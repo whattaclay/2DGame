@@ -1,6 +1,7 @@
 using EnemyScripts;
 using EnemyScripts.Base;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Character.Attacks.DistanceAttack
 {
@@ -10,7 +11,7 @@ namespace Character.Attacks.DistanceAttack
         [SerializeField] private GameObject impactEffect;
         [SerializeField] private float speed = 20f;
         [SerializeField] private float damage = 40f;
-    
+
         void Start()
         {
             rb.velocity = transform.right * speed; // после появления префаба снаряда задаем ему скорость полета
@@ -18,11 +19,11 @@ namespace Character.Attacks.DistanceAttack
 
         private void OnTriggerEnter2D(Collider2D hitInfo) //проверяем куда попал снаряд, если во врага, то снимаем хп
         {
-            if (!hitInfo.CompareTag("Enemy")) return;
-            Enemy enemy = hitInfo.GetComponent<Enemy>();
+            if (!hitInfo.CompareTag("Enemy") && !hitInfo.CompareTag("Environment")) return;
+            var enemy = hitInfo.GetComponent<Enemy>();
             if (enemy!= null)
             {
-                enemy.CurrentHealth -= damage;
+                enemy.Damage(damage);
             }
             Instantiate(impactEffect, transform.position, transform.rotation); //создаем эффект попадания снаряда
             Destroy(gameObject); //дестроим снаряд после попадания

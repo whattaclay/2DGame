@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5022293522899568735}
   - component: {fileID: 8215994223980809515}
   - component: {fileID: 780143488864531194}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BlueMagicBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,3 +140,6 @@ MonoBehaviour:
   impactEffect: {fileID: 2752792933811885772, guid: b17248c9975b140458c4ebcd4a614090, type: 3}
   speed: 20
   damage: 20
+  mayHit:
+    serializedVersion: 2
+    m_Bits: 384

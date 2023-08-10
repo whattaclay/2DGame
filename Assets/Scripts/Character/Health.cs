@@ -6,7 +6,7 @@ namespace Character
     public class Health : MonoBehaviour
     {
         [SerializeField] private float startHealth;
-        public float CurrentHealth { get; private set; }
+        public float CurrentHealth { get; set; }
 
         private void Awake()
         {
@@ -16,20 +16,6 @@ namespace Character
         public void TakeDamage(float damage)
         {
             CurrentHealth = Mathf.Clamp(CurrentHealth - damage, 0, startHealth);
-            if (CurrentHealth > 0)
-            {
-            
-            }
-            else
-            {
-            
-            }
-        }
-
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-                TakeDamage(20);
         }
     }
 }

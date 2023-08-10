@@ -19,6 +19,7 @@ namespace Character
         private static readonly int IsHit = Animator.StringToHash("IsHit");
         private static readonly int HitSwitcher = Animator.StringToHash("HitSwitcher");
         private static readonly int IsPowerFullHit = Animator.StringToHash("IsPowerFullHit");
+        private static readonly int IsDead = Animator.StringToHash("IsDead");
 
         private void Update()
         {
@@ -45,7 +46,9 @@ namespace Character
             animator.SetBool(IsFalling, CharacterController2D.MoveState == MoveState.Fall);
             animator.SetBool(IsJumping, CharacterController2D.MoveState == MoveState.Jump);
             animator.SetBool(IsMoving,CharacterController2D.MoveState == MoveState.Move);
+            animator.SetBool(IsDead, CharacterController2D.MoveState == MoveState.Dead);
         }
+        
         public void IsCrouching(bool isCrouching)
         {
             animator.SetBool(IsCrouch, isCrouching);

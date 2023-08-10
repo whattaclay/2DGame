@@ -38,7 +38,7 @@ namespace Character.Attacks.MagicHit
             var hitEnemies = Physics2D.OverlapCircleAll(hitPoint.position, hitRange, enemyLayers);
             foreach (var enemy in hitEnemies)
             {
-                enemy.GetComponent<Enemy>().CurrentHealth -= damage;
+                enemy.GetComponent<Enemy>().Damage(damage);
             }
             /*Collider2D[] colliders = new Collider2D[10];
             var value = Physics2D.OverlapCircleNonAlloc(hitPoint.position, hitRange, colliders, enemyLayers);

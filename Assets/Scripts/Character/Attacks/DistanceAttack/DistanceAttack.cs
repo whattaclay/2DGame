@@ -10,7 +10,7 @@ namespace Character.Attacks.DistanceAttack
         [SerializeField] private float attackCd;
         [SerializeField] private float attackDelay;
         private bool _isAttackCd;
-        public void Shoot() 
+        public void Shoot()
         {
             if(_isAttackCd)return;
             CharacterController2D.FireState = FireState.DistanceAttack;

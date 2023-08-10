@@ -1,4 +1,6 @@
+using System.Globalization;
 using Character;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,18 +10,17 @@ namespace UI
     {
         [SerializeField] private Health playerHealth;
         [SerializeField] private Image currentHealthBar;
+        [SerializeField] private TextMeshProUGUI healthAmount;
         private float _startHealth;
-
-        // Start is called before the first frame update
+        
         void Start()
         {
             _startHealth = playerHealth.CurrentHealth;
             currentHealthBar.fillAmount = playerHealth.CurrentHealth;
         }
-
-        // Update is called once per frame
         void Update()
         {
+            healthAmount.text = playerHealth.CurrentHealth.ToString(CultureInfo.InvariantCulture);
             currentHealthBar.fillAmount = playerHealth.CurrentHealth / _startHealth;
         }
     }

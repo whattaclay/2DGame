@@ -1,9 +1,15 @@
-using System;
+using System.Collections;
+using Character;
+using EnemyScripts.BehaviorLogic.Attack;
+using EnemyScripts.BehaviorLogic.Chase;
+using EnemyScripts.BehaviorLogic.Die;
+using EnemyScripts.BehaviorLogic.Idle;
+using EnemyScripts.BehaviorLogic.Wander;
 using EnemyScripts.Interfaces;
 using EnemyScripts.StateMachine;
 using EnemyScripts.StateMachine.ConcreteState;
 using UnityEngine;
-using Random = UnityEngine.Random;
+using EnemyIdleState = EnemyScripts.StateMachine.ConcreteState.EnemyIdleState;
 
 namespace EnemyScripts.Base
 {
@@ -12,53 +18,86 @@ namespace EnemyScripts.Base
         [field: SerializeField] public float MaxHealth { get; set; } = 100f;
         [field: SerializeField] public Animator Animator { get; set; }
         [field: SerializeField] public float CurrentHealth { get; set; }
+        [SerializeField] private float attackDamage;
         public Rigidbody2D Rb { get; set; }
         public bool IsFacingRight { get; set; } = true;
         public bool IsAggro { get; set; }
         public bool IsWithinAttackDistance { get; set; }
+        
+        public bool IsHitWall { get; set; }
+        public Collider2D[] Colliders { get; private set; }
+        private Health _playerHealth;
 
-        #region Idle Variables
+        #region Animation
 
-        public float randomMovementRange = 5f;
-        public float idleSpeed;
-
-        #endregion
-
-        #region Chase Variables
-
-        public float chaseSpeed;
-        public float distanceToStopChasing;
+        private static readonly int IsHurt = Animator.StringToHash("IsHurt");
 
         #endregion
 
+        #region ScriptableOdject Variables
+
+        [SerializeField] private EnemyIdleSOBase enemyIdleBase;
+        [SerializeField] private EnemyWanderSOBase enemyWanderBase;
+        [SerializeField] private EnemyChaseSOBase enemyChaseBase;
+        [SerializeField] private EnemyAttackSOBaase enemyAttackBase;
+        [SerializeField] private EnemyDieSOBase enemyDieBase;
+
+        public EnemyIdleSOBase EnemyIdleBaseInstance { get; set; }
+        public EnemyWanderSOBase EnemyWanderBaseInstance { get; set; }
+        public EnemyChaseSOBase EnemyChaseBaseInstance { get; set; }
+        public EnemyAttackSOBaase EnemyAttackBaseInstance { get; set; }
+        public EnemyDieSOBase EnemyDieBaseInstance { get; set; }
+
+        #endregion
+        
         #region State Machine Variables
 
         public EnemyStateMachine StateMachine { get; set; }
-        
-        public EnemyWalkState WalkState { get; set; }
-        
+        public EnemyIdleState IdleState { get; set; }
+        public EnemyWanderState WanderState { get; set; }
         public EnemyChaseState ChaseState { get; set; }
-
         public EnemyAttackState AttackState { get; set; }
+        public EnemyDieState DieState { get; set; }
         
         #endregion
 
         private void Awake()
         {
+            EnemyIdleBaseInstance = Instantiate(enemyIdleBase);
+            EnemyWanderBaseInstance = Instantiate(enemyWanderBase);
+            EnemyChaseBaseInstance = Instantiate(enemyChaseBase);
+            EnemyAttackBaseInstance = Instantiate(enemyAttackBase);
+            EnemyDieBaseInstance = Instantiate(enemyDieBase);
+            
             StateMachine = new EnemyStateMachine();
-            WalkState = new EnemyWalkState(this, StateMachine);
+
+            IdleState = new EnemyIdleState(this, StateMachine);
+            WanderState = new EnemyWanderState(this, StateMachine);
             ChaseState = new EnemyChaseState(this, StateMachine);
             AttackState = new EnemyAttackState(this, StateMachine);
+            DieState = new EnemyDieState(this, StateMachine);
+            
+            Colliders = GetComponents<Collider2D>();
+            
+            _playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
         }
         private void Start()
         {
             CurrentHealth = MaxHealth;
             Rb = GetComponent<Rigidbody2D>();
-            StateMachine.Initialize(WalkState);
+            
+            EnemyIdleBaseInstance.Initialize(gameObject,this);
+            EnemyWanderBaseInstance.Initialize(gameObject, this);
+            EnemyChaseBaseInstance.Initialize(gameObject, this);
+            EnemyAttackBaseInstance.Initialize(gameObject, this);
+            EnemyDieBaseInstance.Initialize(gameObject,this);
+            
+            StateMachine.Initialize(WanderState);
         }
         private void Update()
         {
             StateMachine.CurrentEnemyState.FrameUpdate();
+            
         }
         private void FixedUpdate()
         {
@@ -69,6 +108,8 @@ namespace EnemyScripts.Base
         public void Damage(float damageAmount)
         {
             CurrentHealth -= damageAmount;
+            Animator.SetTrigger(IsHurt);
+            MoveEnemy(Vector2.zero);
             if (CurrentHealth <= 0f)
             {
                 Die();
@@ -76,9 +117,9 @@ namespace EnemyScripts.Base
         }
         public void Die()
         {
-            throw new System.NotImplementedException();
+            StateMachine.ChangeState(DieState);
         }
-        
+
         #endregion
         
         #region Movement Functions
@@ -89,37 +130,28 @@ namespace EnemyScripts.Base
             CheckForLeftOrRightFacing(velocity);
         }
 
+        
         public void CheckForLeftOrRightFacing(Vector2 velocity)
         {
-            if (IsFacingRight && velocity.x < 0f)
+            switch (IsFacingRight)
             {
-                Vector3 rotator = new Vector3(transform.rotation.x, 180f, transform.rotation.z);
-                transform.rotation = Quaternion.Euler(rotator);
-                IsFacingRight = !IsFacingRight;
+                case true when velocity.x < 0f:
+                {
+                    var rotator = new Vector3(transform.rotation.x, 180f, transform.rotation.z);
+                    transform.rotation = Quaternion.Euler(rotator);
+                    IsFacingRight = !IsFacingRight;
+                    break;
+                }
+                case false when velocity.x > 0f:
+                {
+                    var rotator = new Vector3(transform.rotation.x, 0f , transform.rotation.z);
+                    transform.rotation = Quaternion.Euler(rotator);
+                    IsFacingRight = !IsFacingRight;
+                    break;
+                }
             }
-            else if (!IsFacingRight && velocity.x > 0f)
-            {
-                Vector3 rotator = new Vector3(transform.rotation.x, 0f , transform.rotation.z);
-                transform.rotation = Quaternion.Euler(rotator);
-                IsFacingRight = !IsFacingRight;
-            }
         }
 
-        #endregion
-
-        #region Animation Triggers
-
-        private void AnimationTriggerEvent(AnimationTriggerType triggerType)
-        {
-            StateMachine.CurrentEnemyState.AnimationTriggerEvent(triggerType);
-        }
-        public enum AnimationTriggerType
-        {
-            EnemyIdle,
-            EnemyChase,
-            EnemyAttack,
-            EnemyDamaged
-        }
         #endregion
 
         #region Distance Check
@@ -135,5 +167,10 @@ namespace EnemyScripts.Base
         }
 
         #endregion
+
+        public void GiveDamage()
+        {
+            _playerHealth.TakeDamage(attackDamage);
+        }
     }
 }

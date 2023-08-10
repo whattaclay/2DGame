@@ -5,13 +5,13 @@ namespace EnemyScripts.StateMachine
 {
     public class EnemyState
     {
-        protected Enemy enemy;
-        protected EnemyStateMachine enemyStateMachine;
+        protected Enemy Enemy;
+        protected EnemyStateMachine EnemyStateMachine;
 
         protected EnemyState(Enemy enemy, EnemyStateMachine enemyStateMachine)
         {
-            this.enemy = enemy;
-            this.enemyStateMachine = enemyStateMachine;
+            this.Enemy = enemy;
+            this.EnemyStateMachine = enemyStateMachine;
         }
         public virtual void EnterState(){}
         
@@ -20,7 +20,6 @@ namespace EnemyScripts.StateMachine
         public virtual void FrameUpdate(){}
         
         public virtual void PhysicsUpdate(){}
-        
-        public virtual void AnimationTriggerEvent(Enemy.AnimationTriggerType triggerType){}
+       
     }
 }
