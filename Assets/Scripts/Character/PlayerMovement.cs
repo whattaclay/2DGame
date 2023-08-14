@@ -28,7 +28,6 @@ namespace Character
         {
             _isJump = false;
         }
-        
         private void FixedUpdate()
         {
             controller.Move((_horizontalMove * Time.fixedDeltaTime), _isCrouch, _isJump); 

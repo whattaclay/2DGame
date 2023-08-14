@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6782455481693165821}
   - component: {fileID: 6169142601252255272}
-  - component: {fileID: 8816640110976581617}
   m_Layer: 0
   m_Name: Stakes
   m_TagString: Untagged
@@ -85,39 +84,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!68 &8816640110976581617
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4645984537633330341}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
-  m_Points:
-  - {x: 0.21983792, y: -0.23992658}
-  - {x: -0.21961498, y: -0.23996043}
-  - {x: -0.18575859, y: -0.09074187}
-  - {x: -0.1554985, y: -0.20501804}
-  - {x: -0.12521935, y: -0.12395358}
-  - {x: -0.09456444, y: -0.20594859}
-  - {x: -0.06404495, y: -0.09128475}
-  - {x: -0.034703255, y: -0.20700502}
-  - {x: -0.004740715, y: -0.12013459}
-  - {x: 0.023846626, y: -0.21398687}
-  - {x: 0.065761566, y: -0.092586756}
-  - {x: 0.09467697, y: -0.20782042}
-  - {x: 0.12393093, y: -0.11910486}
-  - {x: 0.15632153, y: -0.21012664}
-  - {x: 0.18440342, y: -0.09031224}
-  - {x: 0.2198379, y: -0.23951033}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0

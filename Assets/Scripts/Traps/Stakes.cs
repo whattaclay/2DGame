@@ -19,6 +19,7 @@ namespace Traps
                 _player.transform.position =
                     transform.position.x - _player.transform.position.x > 0 
                         ? rightTpPoint.position : leftTpPoint.position;
+                col.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             }
         }
     }

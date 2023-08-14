@@ -12,7 +12,9 @@ namespace Traps
         private void OnTriggerEnter2D(Collider2D col)
         {
             var pushDirection = (col.transform.position - transform.position);
-            col.GetComponent<Rigidbody2D>().AddForce(pushDirection * impulseMagnitude, ForceMode2D.Impulse);
+            var rb = col.GetComponent<Rigidbody2D>();
+            rb.velocity = new Vector2(rb.velocity.x, 0f);
+            rb.AddForce(pushDirection * impulseMagnitude, ForceMode2D.Impulse);
             animator.SetTrigger(IsBounce);
         }
     }

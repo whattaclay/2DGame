@@ -121,11 +121,11 @@ namespace Character
 					_flipValue = ChangeDirectionView.Flip(transform, _flipValue);
 					break;
 			}
-			if (Math.Abs(move) > 0 && !jump && _rigidbody2D.velocity.y >= 0)
+			if (Math.Abs(move) > 0.1f && !jump && _rigidbody2D.velocity.y >= FallingConst)
 			{
 				MoveState = MoveState.Move;
 			}
-			else if(Math.Abs(move) == 0f && !jump && _rigidbody2D.velocity.y >= 0)
+			else if(Math.Abs(move) < 0.1f && !jump && _rigidbody2D.velocity.y >= FallingConst)
 			{
 				MoveState = MoveState.Idle;
 			}
