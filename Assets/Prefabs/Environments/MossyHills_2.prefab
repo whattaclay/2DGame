@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7553198788691265878}
   - component: {fileID: 7553198788691265879}
   - component: {fileID: 2238438147374327488}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MossyHills_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

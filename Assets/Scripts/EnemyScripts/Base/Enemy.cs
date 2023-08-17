@@ -13,11 +13,11 @@ using EnemyIdleState = EnemyScripts.StateMachine.ConcreteState.EnemyIdleState;
 
 namespace EnemyScripts.Base
 {
-    public class Enemy : MonoBehaviour , IDamageable , IEnemyMoveable, ITriggerCheckable
+    public class Enemy : MonoBehaviour , IEnemyMoveable, ITriggerCheckable
     {
-        [field: SerializeField] public float MaxHealth { get; set; } = 100f;
         [field: SerializeField] public Animator Animator { get; set; }
-        [field: SerializeField] public float CurrentHealth { get; set; }
+        [field: SerializeField] private float CurrentHealth { get; set; }
+        
         [SerializeField] private float attackDamage;
         public Rigidbody2D Rb { get; set; }
         public bool IsFacingRight { get; set; } = true;
@@ -27,6 +27,7 @@ namespace EnemyScripts.Base
         public bool IsHitWall { get; set; }
         public Collider2D[] Colliders { get; private set; }
         private Health _playerHealth;
+        private Health _enemyHealth;
 
         #region Animation
 
@@ -63,6 +64,7 @@ namespace EnemyScripts.Base
 
         private void Awake()
         {
+            
             EnemyIdleBaseInstance = Instantiate(enemyIdleBase);
             EnemyWanderBaseInstance = Instantiate(enemyWanderBase);
             EnemyChaseBaseInstance = Instantiate(enemyChaseBase);
@@ -80,10 +82,11 @@ namespace EnemyScripts.Base
             Colliders = GetComponents<Collider2D>();
             
             _playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
+
+            _enemyHealth = GetComponent<Health>();
         }
         private void Start()
-        {
-            CurrentHealth = MaxHealth;
+        { 
             Rb = GetComponent<Rigidbody2D>();
             
             EnemyIdleBaseInstance.Initialize(gameObject,this);
@@ -93,11 +96,16 @@ namespace EnemyScripts.Base
             EnemyDieBaseInstance.Initialize(gameObject,this);
             
             StateMachine.Initialize(WanderState);
+            
+            CurrentHealth = _enemyHealth.CurrentHealth;
         }
         private void Update()
         {
+            if (_enemyHealth.CurrentHealth < CurrentHealth)
+            {
+                Damage();
+            }
             StateMachine.CurrentEnemyState.FrameUpdate();
-            
         }
         private void FixedUpdate()
         {
@@ -105,12 +113,12 @@ namespace EnemyScripts.Base
         }
         #region Health / Die Functions
         
-        public void Damage(float damageAmount)
+        private void Damage()
         {
-            CurrentHealth -= damageAmount;
             Animator.SetTrigger(IsHurt);
             MoveEnemy(Vector2.zero);
-            if (CurrentHealth <= 0f)
+            CurrentHealth = _enemyHealth.CurrentHealth;
+            if (_enemyHealth.CurrentHealth <= 0f)
             {
                 Die();
             }

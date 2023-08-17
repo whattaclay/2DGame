@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3129864741637529025}
   - component: {fileID: 3129864741637529033}
   - component: {fileID: 3129864741637529024}
+  - component: {fileID: 6866608888611457416}
   m_Layer: 7
   m_Name: SkeletonWarrior
   m_TagString: Enemy
@@ -159,7 +160,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df2b6869ff4b79e40bb52523e3e37cb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <MaxHealth>k__BackingField: 100
   <Animator>k__BackingField: {fileID: 3129864741637529033}
   <CurrentHealth>k__BackingField: 0
   attackDamage: 20
@@ -168,6 +168,19 @@ MonoBehaviour:
   enemyChaseBase: {fileID: 11400000, guid: 9614c8e71d77d894baee9949cd511d9d, type: 2}
   enemyAttackBase: {fileID: 11400000, guid: e5b5320717afd06408162aaa808697fe, type: 2}
   enemyDieBase: {fileID: 11400000, guid: 7b4efb4bd81f5f94d9d2b68712d4b518, type: 2}
+--- !u!114 &6866608888611457416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3129864741637529034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aec5497b78159ba4eadcb53daaeee7bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startHealth: 100
 --- !u!1 &4123287094460297006
 GameObject:
   m_ObjectHideFlags: 0

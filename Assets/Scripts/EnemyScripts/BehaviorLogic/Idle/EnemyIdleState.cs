@@ -25,6 +25,10 @@ namespace EnemyScripts.BehaviorLogic.Idle
         {
             Enemy.MoveEnemy(Vector2.zero);
             base.DoFrameUpdateLogic();
+            if (Enemy.IsAggro)
+            {
+                Enemy.StateMachine.ChangeState(Enemy.AttackState);
+            }
         }
 
         public override void DoPhysicsLogic()
