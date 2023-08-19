@@ -21,7 +21,7 @@ MonoBehaviour:
     m_Value: {r: 1, g: 1, b: 1, a: 1}
   balance:
     m_OverrideState: 1
-    m_Value: -20.2
+    m_Value: -68
 --- !u!114 &-4481590087768291158
 MonoBehaviour:
   m_ObjectHideFlags: 3

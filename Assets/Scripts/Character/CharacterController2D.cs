@@ -4,6 +4,7 @@ using Character.Attacks.DistanceAttack;
 using Character.Attacks.MagicHit;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace Character
 {
@@ -39,14 +40,14 @@ namespace Character
 		public UnityEvent<bool> onCrouchEvent;
 		public UnityEvent onCharactersDeath;
 
-		private Health _health;
+		public Health health;
 
 		private void Awake() 
 		{
 			_rigidbody2D = GetComponent<Rigidbody2D>();
 			onLandEvent ??= new UnityEvent(); 
 			onCrouchEvent ??= new UnityEvent<bool>();
-			_health = GetComponent<Health>();
+			health = GetComponent<Health>();
 		}
 		private void FixedUpdate()
 		{
@@ -74,7 +75,7 @@ namespace Character
 			{
 				magicHit.PowerFullHit();
 			}
-			if (_health.CurrentHealth <= 0)
+			if (health.CurrentHealth <= 0)
 			{
 				Die();
 			}

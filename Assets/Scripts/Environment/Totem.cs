@@ -1,6 +1,7 @@
 ﻿using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Environment
 {
@@ -9,11 +10,19 @@ namespace Environment
         public Action OnActivated;
         [SerializeField] private GameObject glowElement;
         [SerializeField] private TextMeshProUGUI totemText;
+        public bool isActivated;
+
 
         private void Awake()
         {
             totemText.enabled = false;
             glowElement.SetActive(false);
+        }
+        private void Update() //код для сохранения прогресса
+        {
+            if (!isActivated && totemText) return;
+            glowElement.SetActive(true);
+            Destroy(totemText);
         }
         private void OnTriggerStay2D(Collider2D other)
         {
@@ -33,9 +42,11 @@ namespace Environment
         }
         private void Activate()
         {
-            Destroy(totemText);
             glowElement.SetActive(true);
+            isActivated = true;
+            Destroy(totemText);
             OnActivated?.Invoke();
         }
+        
     }
 }

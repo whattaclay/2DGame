@@ -1,0 +1,29 @@
+﻿using System.Collections;
+using System.Globalization;
+using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
+public class LevelLoader : MonoBehaviour
+{
+    [SerializeField] private GameObject loadingScreen;
+    [SerializeField] private Image image;
+    [SerializeField] private TextMeshProUGUI percentageText;
+    public void LoadLevel(int sceneIndex)
+    {
+        StartCoroutine(LoadAsynchronously(sceneIndex));
+    }
+    IEnumerator LoadAsynchronously(int sceneIndex)
+    {
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
+        loadingScreen.SetActive(true);
+        while (!operation.isDone)
+        {
+            float progress = Mathf.Clamp01(operation.progress / 0.9f);
+            percentageText.text = (progress * 100f).ToString("F1") + "%";
+            image.fillAmount = progress;
+            yield return null;
+        }
+    }
+}

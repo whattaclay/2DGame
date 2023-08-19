@@ -1,5 +1,4 @@
-using System.Collections;
-using Character;
+using System.Globalization;
 using EnemyScripts.BehaviorLogic.Attack;
 using EnemyScripts.BehaviorLogic.Chase;
 using EnemyScripts.BehaviorLogic.Die;
@@ -8,7 +7,9 @@ using EnemyScripts.BehaviorLogic.Wander;
 using EnemyScripts.Interfaces;
 using EnemyScripts.StateMachine;
 using EnemyScripts.StateMachine.ConcreteState;
+using UI;
 using UnityEngine;
+using UnityEngine.UI;
 using EnemyIdleState = EnemyScripts.StateMachine.ConcreteState.EnemyIdleState;
 
 namespace EnemyScripts.Base
@@ -16,8 +17,6 @@ namespace EnemyScripts.Base
     public class Enemy : MonoBehaviour , IEnemyMoveable, ITriggerCheckable
     {
         [field: SerializeField] public Animator Animator { get; set; }
-        [field: SerializeField] private float CurrentHealth { get; set; }
-        
         [SerializeField] private float attackDamage;
         public Rigidbody2D Rb { get; set; }
         public bool IsFacingRight { get; set; } = true;
@@ -27,7 +26,17 @@ namespace EnemyScripts.Base
         public bool IsHitWall { get; set; }
         public Collider2D[] Colliders { get; private set; }
         private Health _playerHealth;
+        [Header("HealthView")]
+        #region EnemysHealth
+
+        [SerializeField] private GameObject minusHealthTextPrefab;
+        [SerializeField] private Transform flyingPoint;
+        [SerializeField] private Image healthBar;
         private Health _enemyHealth;
+        private float _currentHealth;
+        private float _maxHealth;
+
+        #endregion
 
         #region Animation
 
@@ -36,7 +45,7 @@ namespace EnemyScripts.Base
         #endregion
 
         #region ScriptableOdject Variables
-
+        [Header("Scriptable objects")]
         [SerializeField] private EnemyIdleSOBase enemyIdleBase;
         [SerializeField] private EnemyWanderSOBase enemyWanderBase;
         [SerializeField] private EnemyChaseSOBase enemyChaseBase;
@@ -97,11 +106,13 @@ namespace EnemyScripts.Base
             
             StateMachine.Initialize(WanderState);
             
-            CurrentHealth = _enemyHealth.CurrentHealth;
+            _currentHealth = _enemyHealth.CurrentHealth;
+            _maxHealth = _currentHealth;
+            healthBar.enabled = false;
         }
         private void Update()
         {
-            if (_enemyHealth.CurrentHealth < CurrentHealth)
+            if (_enemyHealth.CurrentHealth < _currentHealth)
             {
                 Damage();
             }
@@ -113,18 +124,26 @@ namespace EnemyScripts.Base
         }
         #region Health / Die Functions
         
+        // ReSharper disable Unity.PerformanceAnalysis
         private void Damage()
         {
+            healthBar.enabled = true;
+            var text = Instantiate(minusHealthTextPrefab, flyingPoint.position, Quaternion.identity);
+            text.GetComponent<MinusHealthText>()
+                .SetText((_currentHealth-_enemyHealth.CurrentHealth)
+                    .ToString(CultureInfo.InvariantCulture));
             Animator.SetTrigger(IsHurt);
             MoveEnemy(Vector2.zero);
-            CurrentHealth = _enemyHealth.CurrentHealth;
+            _currentHealth = _enemyHealth.CurrentHealth;
+            healthBar.fillAmount = _currentHealth / _maxHealth;
             if (_enemyHealth.CurrentHealth <= 0f)
             {
                 Die();
             }
         }
-        public void Die()
+        private void Die()
         {
+            healthBar.enabled = false;
             StateMachine.ChangeState(DieState);
         }
 
@@ -137,8 +156,6 @@ namespace EnemyScripts.Base
             Rb.velocity = velocity;
             CheckForLeftOrRightFacing(velocity);
         }
-
-        
         public void CheckForLeftOrRightFacing(Vector2 velocity)
         {
             switch (IsFacingRight)

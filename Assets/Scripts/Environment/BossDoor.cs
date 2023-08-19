@@ -1,7 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 namespace Environment
 {
@@ -15,6 +14,7 @@ namespace Environment
         [SerializeField] private TextMeshProUGUI bossDoorText;
         private bool _isReadyToOpen;
         public UnityEvent <string,float> onFlameEnable;
+        public UnityEvent onDoorOpen;
         private const float TimeForActivateFlame = 3f;
         private float _timeCounter;
 
@@ -80,7 +80,7 @@ namespace Environment
             if(!_isReadyToOpen) return;
             if (Input.GetKeyDown(KeyCode.R))
             {
-                //Switch Scene Logic
+                onDoorOpen.Invoke();
             }
         }
         private void OnTriggerExit2D(Collider2D other)

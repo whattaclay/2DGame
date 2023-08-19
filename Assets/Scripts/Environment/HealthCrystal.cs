@@ -1,5 +1,4 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using TMPro;
 using UnityEngine;
 
@@ -29,7 +28,7 @@ namespace Environment
             Instantiate(effectPrefab, col.transform.position, col.transform.rotation)
                 .GetComponent<HealthCrystalEffect>()
                 .SetBodyToFollow(col.GetComponent<Health>(),applyHealth);
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
         private void OnTriggerExit2D(Collider2D other)
         {

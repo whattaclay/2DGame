@@ -37,7 +37,7 @@ namespace EnemyScripts.BehaviorLogic.Die
             _timer += Time.deltaTime;
             if (_timer >= destroyAfterTime)
             {
-                Destroy(Enemy.gameObject);
+                Enemy.gameObject.SetActive(false);
             }
         }
 

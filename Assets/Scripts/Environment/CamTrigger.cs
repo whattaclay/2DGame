@@ -16,7 +16,7 @@ namespace Environment
         {
             if (!col.CompareTag("Player")) return;
             onCamTriggerEnter.Invoke(camName, cutsceneTime);
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }
