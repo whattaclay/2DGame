@@ -1,5 +1,4 @@
 ﻿using EnemyScripts.Base;
-using EnemyScripts.BehaviorLogic.Idle;
 using UnityEngine;
 
 namespace EnemyScripts.BehaviorLogic.Wander

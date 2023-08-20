@@ -4,7 +4,6 @@ using Character.Attacks.DistanceAttack;
 using Character.Attacks.MagicHit;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 namespace Character
 {
@@ -48,6 +47,7 @@ namespace Character
 			onLandEvent ??= new UnityEvent(); 
 			onCrouchEvent ??= new UnityEvent<bool>();
 			health = GetComponent<Health>();
+			MoveState = MoveState.Idle;
 		}
 		private void FixedUpdate()
 		{
@@ -138,7 +138,7 @@ namespace Character
 		private void Die()
 		{
 			MoveState = MoveState.Dead;
-			_rigidbody2D.constraints = RigidbodyConstraints2D.FreezePositionX;
+			_rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
 			onCharactersDeath.Invoke();
 		}
 	}

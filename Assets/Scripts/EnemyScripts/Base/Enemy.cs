@@ -117,6 +117,7 @@ namespace EnemyScripts.Base
                 Damage();
             }
             StateMachine.CurrentEnemyState.FrameUpdate();
+            healthBar.transform.rotation = Quaternion.Euler(Vector3.zero);
         }
         private void FixedUpdate()
         {
@@ -195,7 +196,7 @@ namespace EnemyScripts.Base
 
         public void GiveDamage()
         {
-            _playerHealth.TakeDamage(attackDamage);
+            _playerHealth.GiveDamage(attackDamage);
         }
     }
 }

@@ -252,3 +252,5 @@ MonoBehaviour:
   impactEffect: {fileID: 2752792933811885772, guid: b17248c9975b140458c4ebcd4a614090, type: 3}
   speed: 20
   damage: 20
+  timer: 5
+  sharedImpulseMagnitude: 3

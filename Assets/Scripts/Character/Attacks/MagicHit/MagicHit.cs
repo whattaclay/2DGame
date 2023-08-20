@@ -1,7 +1,5 @@
-using System.Collections;
-using EnemyScripts;
+using Sounds;
 using UnityEngine;
-using Enemy = EnemyScripts.Base.Enemy;
 
 namespace Character.Attacks.MagicHit
 {
@@ -10,60 +8,71 @@ namespace Character.Attacks.MagicHit
         [SerializeField] private Transform hitPoint;
         [SerializeField] private float hitRange = 0.5f;
         [SerializeField] private LayerMask enemyLayers;
-        [SerializeField] private float hitDamage = 10f;
         [SerializeField] private float hitCd = 0.3f;
-        [SerializeField] private float powerFullHitDamage = 15f;
         [SerializeField] private float powerFullHitCd = 2f;
+        [SerializeField] private float impulseMagnitude = 60f;
+        [SerializeField] private AudioClip hit;
+        [SerializeField] private AudioClip powerFullHit;
+        public float HitTimer { get; private set; }
+        public float PowerFullTimer { get; private set; }
+        public bool _isHit { get; private set; }
+        public bool _isPowerFullHit { get; private set; }
         private bool _readyToHit = true;
         private bool _readyToPowerFullHit = true;
-        private const float PowerFullHitDelay = 0.25f;
+
+        private void Awake()
+        {
+            HitTimer = hitCd;
+            PowerFullTimer = powerFullHitCd;
+        }
+
+        private void Update()
+        {
+            PowerFullHitTimerLogic();
+            HitTimerLogic();
+        }
+        private void PowerFullHitTimerLogic()
+        {
+            if (!_isPowerFullHit) return;
+            PowerFullTimer -= Time.deltaTime;
+            _readyToPowerFullHit = false;
+            if (!(PowerFullTimer <= 0)) return;
+            PowerFullTimer = powerFullHitCd;
+            _isPowerFullHit = false;
+            _readyToPowerFullHit = true;
+        }
+        private void HitTimerLogic()
+        {
+            if (!_isHit) return;
+            HitTimer -= Time.deltaTime;
+            _readyToHit = false;
+            if (!(HitTimer <= 0)) return;
+            HitTimer = hitCd;
+            _isHit = false;
+            _readyToHit = true;
+        }
         public void Hit()
         {
             if (!_readyToHit) return;
+            _isHit = true;
+            PlayerAudioManager.instance.PlaySound(hit);
             CharacterController2D.FireState = FireState.MagicHit;
-            _readyToHit = false;
-            StartCoroutine(HitDelay());
-            TakeDamage(hitDamage);
         }
         public void PowerFullHit()
         {
             if (!_readyToPowerFullHit) return;
+            _isPowerFullHit = true;
+            PlayerAudioManager.instance.PlaySound(powerFullHit);
             CharacterController2D.FireState = FireState.PowerFullMagicHit;
-            _readyToPowerFullHit = false;
-            StartCoroutine(PowerFullHitCd());
-            StartCoroutine(HitAfter());
         }
-        private void TakeDamage(float damage)
+        public void TakeDamage(float damage) //урон и импульс задается через аниматор
         {
             var hitEnemies = Physics2D.OverlapCircleAll(hitPoint.position, hitRange, enemyLayers);
             foreach (var enemy in hitEnemies)
             {
-                enemy.GetComponent<Health>().TakeDamage(damage);
+                enemy.GetComponent<Health>().GiveDamage(damage);
+                enemy.GetComponent<Rigidbody2D>().AddForce(new Vector2((hitPoint.position.x * impulseMagnitude),hitPoint.position.y),ForceMode2D.Impulse);
             }
-            /*Collider2D[] colliders = new Collider2D[10];
-            var value = Physics2D.OverlapCircleNonAlloc(hitPoint.position, hitRange, colliders, enemyLayers);
-            if (value <= 0) return;
-            foreach (var enemy in colliders)
-            {
-                enemy.TryGetComponent<Health>(out var component);
-                component.TakeDamage(damage);
-            }*/
-        }
-
-        private IEnumerator HitAfter()
-        {
-            yield return new WaitForSeconds(PowerFullHitDelay);
-            TakeDamage(powerFullHitDamage);
-        }
-        private IEnumerator HitDelay()
-        {
-            yield return new WaitForSeconds(hitCd);
-            _readyToHit = true;
-        }
-        private IEnumerator PowerFullHitCd()
-        {
-            yield return new WaitForSeconds(powerFullHitCd);
-            _readyToPowerFullHit = true;
         }
     }
 }

@@ -1,8 +1,5 @@
-﻿using System;
-using Cinemachine.Editor;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 namespace Environment
 {

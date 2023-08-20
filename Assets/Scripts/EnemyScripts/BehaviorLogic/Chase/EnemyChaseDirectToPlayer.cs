@@ -1,6 +1,5 @@
 using EnemyScripts.Base;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace EnemyScripts.BehaviorLogic.Chase
 {

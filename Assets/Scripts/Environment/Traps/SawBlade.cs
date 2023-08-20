@@ -35,7 +35,7 @@ namespace Environment.Traps
             if (!col.CompareTag("Player")) return;
             var pushDirection = (col.transform.position - transform.position);
             col.GetComponent<Rigidbody2D>().AddForce(pushDirection * impulseMagnitude, ForceMode2D.Impulse);
-            col.GetComponent<Health>().TakeDamage(damage);
+            col.GetComponent<Health>().GiveDamage(damage);
         }
     }
 }

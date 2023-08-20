@@ -1,5 +1,4 @@
 using EnemyScripts.Base;
-using UnityEngine;
 
 namespace EnemyScripts.StateMachine.ConcreteState
 {

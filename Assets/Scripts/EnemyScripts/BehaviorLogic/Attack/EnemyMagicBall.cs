@@ -31,7 +31,7 @@ namespace EnemyScripts.BehaviorLogic.Attack
         private void OnTriggerEnter2D(Collider2D hitInfo) //проверяем куда попал снаряд, если во врага, то снимаем хп
         {
             if (!hitInfo.CompareTag("Player")) return;
-            hitInfo.GetComponent<Health>().TakeDamage(damage);
+            hitInfo.GetComponent<Health>().GiveDamage(damage);
             hitInfo.GetComponent<Rigidbody2D>().AddForce(rb.velocity * sharedImpulseMagnitude, ForceMode2D.Impulse);
             OnEndOfLifeCycle();
         }

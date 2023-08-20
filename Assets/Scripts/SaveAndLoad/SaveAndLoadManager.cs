@@ -21,7 +21,6 @@ namespace SaveAndLoad
             LoadEnemies();
             LoadCrystals();
         }
-
         public void SaveProgress()
         {
             SavePlayer();
@@ -54,6 +53,7 @@ namespace SaveAndLoad
         private void LoadPlayer()
         {
             PlayerData data = SaveSystem.LoadPlayer();
+            if (data == null) return;
             player.health.CurrentHealth = data.Health;
             Vector3 position;
             position.x = data.Position[0];
@@ -87,7 +87,7 @@ namespace SaveAndLoad
         private void LoadEnemies()
         {
             EnemyData data = SaveSystem.LoadEnemiesValues();
-            for (int i = 0; i < enemies.enemies.Length; i++)
+            for (int i = 0; i < data.aliveEnemies.Length; i++)
             {
                 if (data.aliveEnemies[i] == 1)
                 {
@@ -102,7 +102,7 @@ namespace SaveAndLoad
         private void LoadCrystals()
         {
             CrystalsData data = SaveSystem.LoadCrystalsValues();
-            for (int i = 0; i < crystals.crystals.Length; i++)
+            for (int i = 0; i < data.crystals.Length; i++)
             {
                 if (data.crystals[i] == 0)
                 {

@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Globalization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,6 +11,10 @@ public class LevelLoader : MonoBehaviour
     [SerializeField] private TextMeshProUGUI percentageText;
     public void LoadLevel(int sceneIndex)
     {
+        if (sceneIndex != 0)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
         StartCoroutine(LoadAsynchronously(sceneIndex));
     }
     IEnumerator LoadAsynchronously(int sceneIndex)

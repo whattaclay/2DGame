@@ -1,5 +1,4 @@
 using System.Globalization;
-using Character;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

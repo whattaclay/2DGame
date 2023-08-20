@@ -1,6 +1,4 @@
-﻿using System;
-using Character;
-using TMPro.EditorUtilities;
+﻿using Character;
 using UnityEngine;
 
 namespace UI
@@ -24,6 +22,7 @@ namespace UI
             if (!Input.GetKeyDown(KeyCode.Escape) || !buttons.activeSelf) return;
             if (!gameMenu.activeSelf)
             {
+                Cursor.lockState = CursorLockMode.Confined;
                 gameMenu.SetActive(true);
                 _controller.enabled = false;
                 _rb.isKinematic = true;
@@ -31,13 +30,12 @@ namespace UI
             }
             else
             {
-                gameMenu.SetActive(false);
-                _controller.enabled = true;
-                _rb.isKinematic = false;
+                BackToGame();
             }
         }
         public void BackToGame()
         {
+            Cursor.lockState = CursorLockMode.Locked;
             gameMenu.SetActive(false);
             _controller.enabled = true;
             _rb.isKinematic = false;

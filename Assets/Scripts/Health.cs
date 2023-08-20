@@ -1,8 +1,10 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Health : MonoBehaviour
 {
     [SerializeField] private float startHealth;
+    public UnityEvent onTakeDamage;
     public float CurrentHealth { get; set; }
 
     private void Awake()
@@ -17,8 +19,9 @@ public class Health : MonoBehaviour
             CurrentHealth = startHealth;
         }
     }
-    public void TakeDamage(float damage)
+    public void GiveDamage(float damage)
     {
         CurrentHealth = Mathf.Clamp(CurrentHealth - damage, 0, startHealth);
+        onTakeDamage.Invoke();
     }
 }

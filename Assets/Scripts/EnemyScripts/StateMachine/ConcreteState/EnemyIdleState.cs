@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using EnemyScripts.Base;
+﻿using EnemyScripts.Base;
 
 namespace EnemyScripts.StateMachine.ConcreteState
 {

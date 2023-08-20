@@ -1,6 +1,4 @@
-﻿using System;
-using Character;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace EnemyScripts
 {
@@ -11,7 +9,7 @@ namespace EnemyScripts
         private void OnTriggerEnter2D(Collider2D col)
         {
             if(col.CompareTag("Player"))
-                col.GetComponent<Health>().TakeDamage(damage);
+                col.GetComponent<Health>().GiveDamage(damage);
         }
     }
 }

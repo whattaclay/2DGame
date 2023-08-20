@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using Character.Attacks;
+﻿using Character.Attacks;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -20,7 +18,12 @@ namespace Character
         private static readonly int HitSwitcher = Animator.StringToHash("HitSwitcher");
         private static readonly int IsPowerFullHit = Animator.StringToHash("IsPowerFullHit");
         private static readonly int IsDead = Animator.StringToHash("IsDead");
+        private static readonly int Hurt = Animator.StringToHash("Hurt");
 
+        public void IsHurt()
+        {
+            animator.SetTrigger(Hurt);
+        }
         private void Update()
         {
             switch (CharacterController2D.FireState)
@@ -47,6 +50,10 @@ namespace Character
             animator.SetBool(IsJumping, CharacterController2D.MoveState == MoveState.Jump);
             animator.SetBool(IsMoving,CharacterController2D.MoveState == MoveState.Move);
             animator.SetBool(IsDead, CharacterController2D.MoveState == MoveState.Dead);
+            if (CharacterController2D.MoveState == MoveState.Dead)
+            {
+                Cursor.lockState = CursorLockMode.Confined;
+            }
         }
         
         public void IsCrouching(bool isCrouching)

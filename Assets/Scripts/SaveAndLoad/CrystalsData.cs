@@ -1,6 +1,5 @@
 ﻿using System;
 using Environment;
-using UnityEngine;
 
 namespace SaveAndLoad
 {

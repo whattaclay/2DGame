@@ -1,5 +1,4 @@
 ﻿using Character;
-using UnityEngine;
 
 namespace SaveAndLoad
 {

@@ -1,5 +1,4 @@
 ﻿using EnemyScripts.Base;
-using TMPro;
 using UnityEngine;
 
 namespace EnemyScripts.BehaviorLogic.Wander
@@ -19,12 +18,20 @@ namespace EnemyScripts.BehaviorLogic.Wander
         public override void DoEnterLogic()
         {
             base.DoEnterLogic();
-            _directionChanger = 1;
+            if (Enemy.IsFacingRight)
+            {
+                _directionChanger = 1;
+            }
+            else
+            {
+                _directionChanger = -1;
+            }
             Enemy.Animator.SetBool(IsWalking,true);
         }
 
         public override void DoExitLogic()
         {
+            Enemy.IsHitWall = true;
             base.DoExitLogic();
             Enemy.Animator.SetBool(IsWalking,false);
         }
@@ -42,9 +49,7 @@ namespace EnemyScripts.BehaviorLogic.Wander
                 _directionChanger = -_directionChanger;
                 Enemy.IsHitWall = false;
             }
-            
         }
-
         public override void DoPhysicsLogic()
         {
             base.DoPhysicsLogic();

@@ -1,6 +1,4 @@
-﻿using Unity.VisualScripting;
-
-namespace EnemyScripts.StateMachine
+﻿namespace EnemyScripts.StateMachine
 {
     public class EnemyStateMachine
     {
