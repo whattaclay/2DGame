@@ -4,6 +4,7 @@ using System.Linq;
 using Environment;
 using UnityEngine;
 
+//Manager мусорное слово, не несет смысловой нагрузки
 public class CamManager : MonoBehaviour
 {
     [SerializeField] private GameObject baseCamera;

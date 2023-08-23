@@ -17,7 +17,7 @@ namespace EnemyScripts.BehaviorLogic.Attack
         private CharacterController2D _opponent;
         void Start()
         {
-            _opponent = FindFirstObjectByType<CharacterController2D>();
+            _opponent = FindFirstObjectByType<CharacterController2D>();//не компилится
             rb.velocity = (_opponent.transform.position-transform.position).normalized * speed; // после появления префаба снаряда задаем ему скорость полета
         }
         private void Update()

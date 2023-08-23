@@ -17,7 +17,7 @@ namespace UI
             _startHealth = playerHealth.CurrentHealth;
             currentHealthBar.fillAmount = playerHealth.CurrentHealth;
         }
-        void Update()
+        void Update()//лучше заменить на обновление по событию, по update очень много лишних вызовов
         {
             healthAmount.text = playerHealth.CurrentHealth.ToString(CultureInfo.InvariantCulture);
             currentHealthBar.fillAmount = playerHealth.CurrentHealth / _startHealth;
