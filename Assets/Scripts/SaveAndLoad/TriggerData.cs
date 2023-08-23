@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace SaveAndLoad
 {
@@ -9,18 +10,21 @@ namespace SaveAndLoad
 
         public TriggerData(CamManager manager)
         {
-            triggersValue = new int[manager.triggers.Length];
-            for (int i = 0; i < triggersValue.Length; i++)
-            {
-                if (manager.triggers[i].gameObject.activeSelf)
-                {
-                    triggersValue[i] = 1;
-                }
-                else
-                {
-                    triggersValue[i] = 0;
-                }
-            }
+            triggersValue = manager.triggers
+                .Select(e => e.gameObject.activeSelf ? 1 : 0)
+                .ToArray();
+            // triggersValue = new int[manager.triggers.Length];
+            // for (int i = 0; i < triggersValue.Length; i++)
+            // {
+            //     if (manager.triggers[i].gameObject.activeSelf)
+            //     {
+            //         triggersValue[i] = 1;
+            //     }
+            //     else
+            //     {
+            //         triggersValue[i] = 0;
+            //     }
+            // }
         }
     }
 }

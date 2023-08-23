@@ -20,7 +20,7 @@ namespace Sounds
         }
         public void FootStep()
         {
-            _source.volume = 0.8f;
+            _source.volume = 0.8f;//хардкод
             int randInt = Random.Range(0, footSteps.Length);
             _source.PlayOneShot(footSteps[randInt]);
         }

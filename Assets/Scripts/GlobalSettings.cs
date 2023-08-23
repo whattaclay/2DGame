@@ -11,7 +11,7 @@ public class GlobalSettings : MonoBehaviour
         if (!PlayerPrefs.HasKey("VolumeValue")) return;
         audioMixer.SetFloat("MasterVolume", Mathf.Log10(PlayerPrefs.GetFloat("VolumeValue")) * 20);
     }
-    public void SetVolume(Slider slider)
+    public void SetVolume(Slider slider)//слишком жесткая связь с UI, заменить на вызов с float-параметром
     {
         audioMixer.SetFloat("MasterVolume", Mathf.Log10(slider.value) * 20);
         PlayerPrefs.SetFloat("VolumeValue",slider.value);

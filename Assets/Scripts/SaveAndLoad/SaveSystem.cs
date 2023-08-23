@@ -7,6 +7,8 @@ using UnityEngine;
 
 namespace SaveAndLoad
 {
+    //Будет раздуваться по мере дополнение сущностей, лучше заменить на каждый отдельный объект который работает в своём domain
+    //Захочешь сделать мультисохранение - например часть в облако, часть на диск, часть кешируется - будет больно с текущем подходом
     public static class SaveSystem
     {
         private static string _playerPath = "/player.txt";

@@ -12,7 +12,7 @@ namespace Environment.Traps
         {
             if (!col.CompareTag("Player")) return;
             _player = col.gameObject;
-            _player.GetComponent<Health>().GiveDamage(damage);
+            _player.GetComponent<Health>().GiveDamage(damage);//может кинуть null, небезопасно
             if (_player.GetComponent<Health>().CurrentHealth > 0)
             {
                 _player.transform.position =
