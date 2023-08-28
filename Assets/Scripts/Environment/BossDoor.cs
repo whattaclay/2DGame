@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -25,6 +26,11 @@ namespace Environment
             secondFlame.SetActive(false);
             bossDoorText.enabled = false;
         }
+        private void Start()
+        {
+            FlamesEnableChecker();
+        }
+
         private void Update()
         {
             FlamesEnableChecker();

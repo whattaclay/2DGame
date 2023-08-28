@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 namespace EnemyScripts.BehaviorLogic.Attack
 {
     [CreateAssetMenu(fileName = "Attack - Default Warrior Attack",menuName = "Enemy Logic/Attack Logic/Default Warrior Attack")]
-    public class EnemyDefaultWarriorAttack : EnemyAttackSOBaase
+    public class EnemyDefaultWarriorAttack : EnemyAttackSOBase
     {
         [SerializeField] private float timeBetweenHits = 1f;
         [SerializeField] private float timeTillExit = 1f;

@@ -8,6 +8,7 @@ namespace Sounds
     {
         private AudioSource _source;
         [SerializeField] private AudioClip[] footSteps;
+        private const float FootStepSoundFixer = 0.8f;
 
         private void Awake()
         {
@@ -20,7 +21,7 @@ namespace Sounds
         }
         public void FootStep()
         {
-            _source.volume = 0.8f;
+            _source.volume = FootStepSoundFixer;
             int randInt = Random.Range(0, footSteps.Length);
             _source.PlayOneShot(footSteps[randInt]);
         }

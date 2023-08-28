@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Character;
+using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Events;
 

@@ -4,7 +4,7 @@ using UnityEngine;
 namespace EnemyScripts.BehaviorLogic.Attack
 {
     [CreateAssetMenu(fileName = "Attack - Long Distance Attack",menuName = "Enemy Logic/Attack Logic/Long Distance Attack")]
-    public class EnemyLongDistanceAttack : EnemyAttackSOBaase
+    public class EnemyLongDistanceAttack : EnemyAttackSOBase
     {
         [SerializeField] private float timeBetweenHits = 1f;
         [SerializeField] private float timeTillExit = 1f;

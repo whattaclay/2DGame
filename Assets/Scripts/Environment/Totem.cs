@@ -46,6 +46,5 @@ namespace Environment
             Destroy(totemText);
             OnActivated?.Invoke();
         }
-        
     }
 }

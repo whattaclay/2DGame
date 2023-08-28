@@ -4,7 +4,7 @@ using UnityEngine;
 namespace EnemyScripts.BehaviorLogic.Attack
 {
     // ReSharper disable once InconsistentNaming
-    public class EnemyAttackSOBaase : ScriptableObject
+    public class EnemyAttackSOBase : ScriptableObject
     {
         protected Enemy Enemy;
         protected Transform Transform;

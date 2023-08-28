@@ -14,6 +14,9 @@ using EnemyIdleState = EnemyScripts.StateMachine.ConcreteState.EnemyIdleState;
 
 namespace EnemyScripts.Base
 {
+    [RequireComponent(typeof(Health))]
+    [RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(Rigidbody2D))]
     public class Enemy : MonoBehaviour , IEnemyMoveable, ITriggerCheckable
     {
         [field: SerializeField] public Animator Animator { get; set; }
@@ -49,13 +52,13 @@ namespace EnemyScripts.Base
         [SerializeField] private EnemyIdleSOBase enemyIdleBase;
         [SerializeField] private EnemyWanderSOBase enemyWanderBase;
         [SerializeField] private EnemyChaseSOBase enemyChaseBase;
-        [SerializeField] private EnemyAttackSOBaase enemyAttackBase;
+        [SerializeField] private EnemyAttackSOBase enemyAttackBase;
         [SerializeField] private EnemyDieSOBase enemyDieBase;
 
         public EnemyIdleSOBase EnemyIdleBaseInstance { get; set; }
         public EnemyWanderSOBase EnemyWanderBaseInstance { get; set; }
         public EnemyChaseSOBase EnemyChaseBaseInstance { get; set; }
-        public EnemyAttackSOBaase EnemyAttackBaseInstance { get; set; }
+        public EnemyAttackSOBase EnemyAttackBaseInstance { get; set; }
         public EnemyDieSOBase EnemyDieBaseInstance { get; set; }
 
         #endregion

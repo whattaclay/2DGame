@@ -2,6 +2,7 @@ using System;
 using Character.Attacks;
 using Character.Attacks.DistanceAttack;
 using Character.Attacks.MagicHit;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
